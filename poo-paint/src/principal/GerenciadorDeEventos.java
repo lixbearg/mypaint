@@ -19,13 +19,8 @@ public class GerenciadorDeEventos extends MouseAdapter {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int ferramenta = barraDeFerramentas.leFerramentaSelecionada();
-		Figura f = null;
-		if (ferramenta == BarraDeFerramentas.RETANGULO) {
-			f = new Retangulo(e.getX(), e.getY(), 40, 40);
-		} else if (ferramenta == BarraDeFerramentas.CIRCULO) {
-			f = new Circulo(e.getX(), e.getY(), 20);
-		}
+		Ferramenta ferramenta = barraDeFerramentas.leFerramentaSelecionada();
+		Figura f = ferramenta.criaFigura(e.getX(), e.getY());
 		this.area.adicionaFigura(f);
 		this.area.repaint();
 	}

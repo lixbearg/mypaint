@@ -1,54 +1,47 @@
 package principal;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
-public class BarraDeFerramentas extends JToolBar implements ActionListener {
+public class BarraDeFerramentas extends JToolBar {
 
-	JToggleButton botaoRetangulo;
-	JToggleButton botaoCirculo;
-	
-	public static final int RETANGULO = 1;
-	public static final int CIRCULO = 2;
-	
-	private int ferramenta;
+	ButtonGroup grupo;
+	private Ferramenta ferramenta;
 	
 	public BarraDeFerramentas() {
 		super("Barra de Ferramentas");
-		ButtonGroup grupo = new ButtonGroup();
+		this.grupo = new ButtonGroup();
 		
-		botaoRetangulo = new JToggleButton("Retângulo");
-		botaoRetangulo.addActionListener(this);
-		grupo.add(botaoRetangulo);
-		this.add(botaoRetangulo);
-		
-		botaoCirculo = new JToggleButton("Círculo");
-		botaoCirculo.addActionListener(this);
-		grupo.add(botaoCirculo);
-		this.add(botaoCirculo);
-		
+		Ferramenta[] ferramentas = new Ferramenta[]{
+			new FerramentaRetangulo(this),
+			new FerramentaCirculo(this),
+			new FerramentaLinha(this)
+		};
+		for (Ferramenta f : ferramentas) {
+			criarBotao(f);
+		}
 		this.setFloatable(false);
-		
-		botaoRetangulo.getModel().setPressed(true);
-		this.ferramenta = RETANGULO;
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == botaoRetangulo) {
-			this.ferramenta = RETANGULO;
+	private JToggleButton criarBotao(Ferramenta ferramenta) {
+		JToggleButton botao = new JToggleButton(ferramenta.getNome());
+		botao.addActionListener(ferramenta);
+		grupo.add(botao);
+		this.add(botao);
+		if (ferramenta.ehFerramentaPadrao()) {
+			botao.getModel().setPressed(true);
+			this.ferramenta = ferramenta;
 		}
-		if (e.getSource() == botaoCirculo) {
-			this.ferramenta = CIRCULO;
-		}
+		return botao;
 	}
 	
-	public int leFerramentaSelecionada() {
+	public Ferramenta leFerramentaSelecionada() {
 		return this.ferramenta;
+	}
+
+	public void setFerramentaAtiva(Ferramenta ferramenta) {
+		this.ferramenta = ferramenta;
 	}
 
 }
