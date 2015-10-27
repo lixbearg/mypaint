@@ -23,6 +23,7 @@ public class Paint extends JFrame {
 		
 		GerenciadorDeEventos gerenciador = new GerenciadorDeEventos(areaDeDesenho, barraDeFerramentas);
 		areaDeDesenho.addMouseListener(gerenciador);
+		areaDeDesenho.addMouseMotionListener(gerenciador);
 		
 		this.setContentPane(painelPrincipal);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);

@@ -13,7 +13,7 @@ public abstract class Ferramenta implements ActionListener {
 		this.barra = barra;
 	}
 	
-	public abstract Figura criaFigura(int x, int y);
+	public abstract Figura criaFigura(int x0, int y0, int x1, int y1);
 	
 	public void actionPerformed(ActionEvent e) {
 		this.barra.setFerramentaAtiva(this);
